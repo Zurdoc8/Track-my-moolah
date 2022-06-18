@@ -24,6 +24,22 @@ mongoose.connect(MONGODB_URI, {
 // routes
 app.use(require("./routes/api.js"));
 
+app.post('/api/submit', ({ body }, res) => {
+  Note.create(body)
+  .then(dbNote => { res.json(dbNote); 
+  })
+  .catch(err => { res.json(err);
+  });
+});
+
+app.get('/api/all', (req, res) => {
+  Note.find({})
+    .then(dbNote => { res.json(dbNote);
+    })
+    .catch(err => { res.json(err);
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
